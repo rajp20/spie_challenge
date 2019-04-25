@@ -18,7 +18,9 @@ def main():
     :return:
     """
     define_gpu()
+    print("Here")
     training_data = BreastPathQDataSet(split="train")
+    del training_data
 
 
 def define_gpu(minimum_memory_mb = 3800):
@@ -29,14 +31,6 @@ def define_gpu(minimum_memory_mb = 3800):
     except:
         pass
     torch.cuda.empty_cache()
-    for i in range(16):
-        free_memory = !nvidia-smi --query-gpu=memory.free -i $i --format=csv,nounits,noheader
-        if free_memory[0] == 'No devices were found':
-            break
-        free_memory = int(free_memory[0])
-        if free_memory>minimum_memory_mb-500:
-            gpu_to_use = i
-            break
     if gpu_to_use is None:
         print('Could not find any GPU available with the required free memory of ' +str(minimum_memory_mb) + 'MB. Please use a different system for this assignment.')
     else:
@@ -45,3 +39,6 @@ def define_gpu(minimum_memory_mb = 3800):
         x = torch.rand((256,1024,minimum_memory_mb-500)).cuda()
         x = torch.rand((1,1)).cuda()
         del x
+
+
+main()
