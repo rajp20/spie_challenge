@@ -4,14 +4,13 @@ import torch
 import numpy as np
 from PIL import Image
 from torchvision import transforms
-import pandas as pd
 import matplotlib.pyplot as plt
 import torch.nn.functional as F
 import sys
 from sklearn.metrics import roc_curve, auc
 import copy
 import torchvision.models as models
-
+from data_loader import BreastPathQDataSet
 
 def main():
     """
@@ -19,6 +18,8 @@ def main():
     :return:
     """
     define_gpu()
+    training_data = BreastPathQDataSet(split="train")
+
 
 def define_gpu(minimum_memory_mb = 3800):
     gpu_to_use = None
