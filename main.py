@@ -9,6 +9,8 @@ from sklearn.metrics import roc_curve, auc
 import copy
 import torchvision.models as models
 from data_loader import BreastPathQDataSet
+from basic_conv import BaselineConvNet
+from utils import Utils
 
 def main():
     """
@@ -19,6 +21,25 @@ def main():
     train_data = BreastPathQDataSet(split="train")
     val_data = BreastPathQDataSet(split="val")
     test_data = BreastPathQDataSet(split="test")
+
+    epochs = [10, 50, 150]
+    learning_rates = [0.1, 0.01, 0.001, 0.0001]
+    batch_size = [2, 8, 16, 32]
+
+    basic_model = Utils(train_data, val_data, test_data, BaselineConvNet)
+    criterion = torch.nn.CrossEntropyLoss()
+    # for epoch in epochs:
+    #     for lr in learning_rates:
+    #         optimizer = torch.optim.Adam(basic_model.parameters(), lr=lr)
+    #         for batch_size in batch_size:
+    #             print("Max Epochs:", epoch, "Learning Rate:", lr, "Batch Size:", batch_size)
+    #             trained_model = basic_model.train(epoch, batch_size, criterion, optimizer)
+    for epoch in epochs:
+        for lr in learning_rates:
+            optimizer = torch.optim.SGD(basic_model.parameters(), lr=lr, momentum=0.9, nesterov=True)
+            for batch_size in batch_size:
+                print("Max Epochs:", epoch, "Learning Rate:", lr, "Batch Size:", batch_size)
+                trained_model = basic_model.train(epoch, batch_size, criterion, optimizer)
 
 
 def define_gpu(minimum_memory_mb=1800):
