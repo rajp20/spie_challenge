@@ -5,7 +5,6 @@ import numpy as np
 # import matplotlib.pyplot as plt
 import torch.nn.functional as F
 import sys
-from sklearn.metrics import roc_curve, auc
 import copy
 import torchvision.models as models
 from data_loader import BreastPathQDataSet
