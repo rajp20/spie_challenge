@@ -1,29 +1,46 @@
 from torch.utils.data import Dataset
+from PIL import Image
+from torchvision import transforms
 import pandas as pd
+import os
 
 
 class BreastPathQDataSet(Dataset):
-    def __init__(self, split = "train"):
-        self.labels = {}
+    def __init__(self, split="train"):
+        self.dataset = []
         if split is "train":
             # Set up training data
-            self.dataset_path = "./datasets/breastpathq/datasets/train/"
+            self.image_path = "./datasets/breastpathq/datasets/train/"
             self.label_path = "./datasets/breastpathq/datasets/train_labels.csv"
+            self.base_image_index = 99788
         elif split is "val":
-            self.dataset_path = "./datasets/breastpathq/datasets/validation/"
+            self.image_path = "./datasets/breastpathq/datasets/validation/"
             self.label_path = "./datasets/breastpathq-test/val_labels.csv"
-        elif split is "train":
-            self.dataset_path = "./datasets/breastpathq-test/test_patches/"
+            self.base_image_index = 99854
+        elif split is "test":
+            self.image_path = "./datasets/breastpathq-test/test_patches/"
+            self.base_image_index = 102174
 
-        if split is "train" or "val":
+        if split is "train" or split is "val":
             label_csv = pd.read_csv(self.label_path, skiprows=1)
             for index, row in label_csv.iterrows():
                 key = str(int(row[0])) + "_" + str(int(row[1]))
-                self.labels[key] = row[2]
-            print(len(self.labels))
+                self.dataset.append({"image": key, "label": row[2], "slide": row[0], "rid": row[1]})
+        if split is "test":
+            for file in os.listdir(self.image_path):
+                file_name = os.fsdecode(file).replace(".tif", "")
+                file_name_split = file_name.split('_')
+                self.dataset.append({"image": file_name, "label": 0, "slide": file_name_split[0],
+                                     "rid": file_name_split[1]})
 
-    def __getitem__(self, item):
-        return item
+    def __getitem__(self, index):
+        set_of_transforms = transforms.Compose(
+            [transforms.ToTensor(),
+             transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                  std=[0.229, 0.224, 0.225])])
+        indexed_label = self.dataset[index]['label']
+        indexed_image = set_of_transforms(Image.open(self.image_path + self.dataset[index]['image'] + ".tif"))
+        return indexed_image, indexed_label
 
     def __len__(self):
-        return len(self.labels)
+        return len(self.dataset)

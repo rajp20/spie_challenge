@@ -2,8 +2,6 @@ import getpass
 import os
 import torch
 import numpy as np
-from PIL import Image
-from torchvision import transforms
 import matplotlib.pyplot as plt
 import torch.nn.functional as F
 import sys
@@ -18,11 +16,12 @@ def main():
     :return:
     """
     define_gpu()
-    training_data = BreastPathQDataSet(split="train")
-    del training_data
+    train_data = BreastPathQDataSet(split="train")
+    val_data = BreastPathQDataSet(split="val")
+    test_data = BreastPathQDataSet(split="test")
 
 
-def define_gpu(minimum_memory_mb = 1800):
+def define_gpu(minimum_memory_mb=1800):
     gpu_to_use = 0
     try:
         print('GPU already assigned before: ' + str(os.environ['CUDA_VISIBLE_DEVICES']))
