@@ -24,7 +24,7 @@ def main():
 
     epochs = [5, 50, 100]
     learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
-    batch_size = [8, 32, 100, 200]
+    batch_size = [4, 8, 16, 32]
 
     basic_model = Utils(train_data, val_data, test_data, BaselineConvNet())
     # resnet18 = models.resnet18(pretrained=True)
