@@ -3,6 +3,7 @@ from PIL import Image
 from torchvision import transforms
 import pandas as pd
 import os
+import torch
 
 
 class BreastPathQDataSet(Dataset):
@@ -40,7 +41,7 @@ class BreastPathQDataSet(Dataset):
                                   std=[0.229, 0.224, 0.225])])
         indexed_label = self.dataset[index]['label']
         indexed_image = set_of_transforms(Image.open(self.image_path + self.dataset[index]['image'] + ".tif"))
-        return indexed_image, indexed_label
+        return indexed_image, torch.FloatTensor([indexed_label])
 
     def __len__(self):
         return len(self.dataset)
