@@ -26,13 +26,13 @@ def main():
     learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
     batch_size = [4, 8, 16, 32]
 
-    basic_model = Utils(train_data, val_data, test_data, BaselineConvNet())
-    # resnet18 = models.resnet18(pretrained=True)
-    # resnet18.fc = torch.nn.Linear(in_features=512, out_features=1)
-    # basic_model = Utils(train_data, val_data, test_data, resnet18)
+    # basic_model = Utils(train_data, val_data, test_data, BaselineConvNet())
+    resnet18 = models.resnet18(pretrained=True)
+    resnet18.fc = torch.nn.Linear(in_features=512, out_features=1)
+    basic_model = Utils(train_data, val_data, test_data, resnet18)
 
-    # criterion = torch.nn.BCEWithLogitsLoss()
-    criterion = torch.nn.MSELoss()
+    criterion = torch.nn.BCEWithLogitsLoss()
+    # criterion = torch.nn.MSELoss()
 
     for epoch in epochs:
         for batch_size in batch_size:
@@ -55,7 +55,7 @@ def define_gpu(minimum_memory_mb=1800):
     print('Chosen GPU: ' + str(0))
     x = torch.rand((256,1024,minimum_memory_mb-500)).cuda()
     del x
-    x = torch.rand((1,1)).cuda()
+    x = torch.rand((1, 1)).cuda()
     del x
 
 

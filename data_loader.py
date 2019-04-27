@@ -37,7 +37,9 @@ class BreastPathQDataSet(Dataset):
     def __getitem__(self, index):
         set_of_transforms = transforms.Compose(
             [transforms.Grayscale(num_output_channels=3),
-             transforms.ToTensor()
+             transforms.ToTensor(),
+             transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                  std=[0.229, 0.224, 0.225])
              ])
         indexed_label = self.dataset[index]['label']
         indexed_image = set_of_transforms(Image.open(self.image_path + self.dataset[index]['image'] + ".tif"))
