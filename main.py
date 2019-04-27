@@ -17,7 +17,11 @@ def main():
     Main Function.
     :return:
     """
-    define_gpu()
+    gpu_mem = 1800
+    if len(sys.argv) is 2 and sys.argv[1] is "cade":
+        gpu_mem = 3800
+    define_gpu(minimum_memory_mb=gpu_mem)
+
     train_data = BreastPathQDataSet(split="train")
     val_data = BreastPathQDataSet(split="val")
     test_data = BreastPathQDataSet(split="test")
@@ -26,21 +30,22 @@ def main():
     learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
     batch_size = [4, 8, 16, 32]
 
-    # basic_model = Utils(train_data, val_data, test_data, BaselineConvNet())
-    resnet18 = models.resnet18(pretrained=True)
-    resnet18.fc = torch.nn.Linear(in_features=51200, out_features=1)
-    basic_model = Utils(train_data, val_data, test_data, resnet18)
+    if len(sys.argv) is 3 and sys.argv[2] is "resnet":
+        resnet18 = models.resnet18(pretrained=True)
+        resnet18.fc = torch.nn.Linear(in_features=51200, out_features=1)
+        basic_model = Utils(train_data, val_data, test_data, resnet18)
+    else:
+        basic_model = Utils(train_data, val_data, test_data, BaselineConvNet())
 
     criterion = torch.nn.BCEWithLogitsLoss()
-    # criterion = torch.nn.MSELoss()
 
     for epoch in epochs:
         for batch_size in batch_size:
             for lr in learning_rates:
-                # optimizer = torch.optim.SGD(basic_model.parameters(), lr=lr, momentum=0.9, nesterov=True)
-                optimizer = torch.optim.Adam(basic_model.parameters(), lr=lr)
+                optimizer = torch.optim.SGD(basic_model.parameters(), lr=0.001, momentum=0.9, nesterov=True)
+                # optimizer = torch.optim.Adam(basic_model.parameters(), lr=0.01)
                 print("Max Epochs:", epoch, "Learning Rate:", lr, "Batch Size:", batch_size)
-                trained_model = basic_model.train(epoch, batch_size, criterion, optimizer)
+                trained_model = basic_model.train(50, 8, criterion, optimizer)
 
 
 def define_gpu(minimum_memory_mb=1800):
