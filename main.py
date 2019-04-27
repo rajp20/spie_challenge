@@ -31,8 +31,7 @@ def main():
     # resnet18.fc = torch.nn.Linear(in_features=512, out_features=1)
     # basic_model = Utils(train_data, val_data, test_data, resnet18)
 
-    # criterion = torch.nn.BCEWithLogitsLoss()
-    criterion = torch.nn.CrossEntropyLoss()
+    criterion = torch.nn.BCEWithLogitsLoss()
     # criterion = torch.nn.MSELoss()
 
     for epoch in epochs:
