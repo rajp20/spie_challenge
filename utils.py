@@ -27,6 +27,7 @@ class Utils:
 
                 images = images.cuda()
                 out = model(images).cpu()
+
                 loss = criterion(out, labels)
                 loss.backward()
 
@@ -62,25 +63,6 @@ class Utils:
                 labels = np.concatenate((labels, label.cpu().detach().numpy()), axis=0)
                 # returns a list of scores, one for each of the labels
         return mean_squared_error(labels.reshape([-1]), logits_predicted.reshape([-1]))
-
-        # model.eval()
-        # correct = 0
-        # incorrect = 0
-        # total = 0
-        # with torch.no_grad():
-        #     for image, label in val_loader:
-        #         total += 1
-        #         image = image.cuda()
-        #         label = label.float()
-        #         predicted_label = model(image).cpu()
-        #         predicted_label = torch.sigmoid(predicted_label)
-        #         if predicted_label[0][0] > label:
-        #             correct += 1
-        #         else:
-        #             incorrect += 1
-        # if debug:
-        #     print("Correct:", correct, "Incorrect:", incorrect)
-        # return correct/total
 
     def evaluate(self):
         test_loader = torch.utils.data.DataLoader(self.test_data, shuffle=True, batch_size=1, num_workers=4)

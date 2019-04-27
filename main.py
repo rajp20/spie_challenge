@@ -22,8 +22,8 @@ def main():
     val_data = BreastPathQDataSet(split="val")
     test_data = BreastPathQDataSet(split="test")
 
-    epochs = [5]
-    learning_rates = [0.1, 0.01, 0.001, 0.0001]
+    epochs = [5, 50, 100]
+    learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
     batch_size = [8, 32, 100, 200]
 
     basic_model = Utils(train_data, val_data, test_data, BaselineConvNet())
@@ -43,7 +43,7 @@ def main():
                 trained_model = basic_model.train(50, batch_size, criterion, optimizer)
 
 
-def define_gpu(minimum_memory_mb=3800):
+def define_gpu(minimum_memory_mb=1800):
     gpu_to_use = 0
     try:
         print('GPU already assigned before: ' + str(os.environ['CUDA_VISIBLE_DEVICES']))
