@@ -11,6 +11,7 @@ from data_loader import BreastPathQDataSet
 from basic_conv import BaselineConvNet
 from utils import Utils
 
+
 def main():
     """
     Main Function.
@@ -27,7 +28,7 @@ def main():
 
     # basic_model = Utils(train_data, val_data, test_data, BaselineConvNet())
     resnet18 = models.resnet18(pretrained=True)
-    resnet18.fc = torch.nn.Linear(in_features=512, out_features=2)
+    resnet18.fc = torch.nn.Linear(in_features=512, out_features=1)
     basic_model = Utils(train_data, val_data, test_data, resnet18)
 
     criterion = torch.nn.BCEWithLogitsLoss()
