@@ -25,10 +25,10 @@ def main():
     learning_rates = [0.1, 0.01, 0.001, 0.0001]
     batch_size = [8]
 
-    basic_model = Utils(train_data, val_data, test_data, BaselineConvNet())
-    # resnet18 = models.resnet18(pretrained=True)
-    # resnet18.fc = torch.nn.Linear(in_features=512, out_features=2)
-    # basic_model = Utils(train_data, val_data, test_data, resnet18)
+    # basic_model = Utils(train_data, val_data, test_data, BaselineConvNet())
+    resnet18 = models.resnet18(pretrained=True)
+    resnet18.fc = torch.nn.Linear(in_features=512, out_features=2)
+    basic_model = Utils(train_data, val_data, test_data, resnet18)
 
     criterion = torch.nn.BCEWithLogitsLoss()
     # criterion = torch.nn.MSELoss()
@@ -42,7 +42,7 @@ def main():
             trained_model = basic_model.train(epoch, 8, criterion, optimizer)
 
 
-def define_gpu(minimum_memory_mb=1800):
+def define_gpu(minimum_memory_mb=3800):
     gpu_to_use = 0
     try:
         print('GPU already assigned before: ' + str(os.environ['CUDA_VISIBLE_DEVICES']))
