@@ -27,7 +27,6 @@ class Utils:
 
                 images = images.cuda()
                 out = model(images).cpu()
-                out = torch.sigmoid(out)
                 loss = criterion(out, labels)
                 loss.backward()
 

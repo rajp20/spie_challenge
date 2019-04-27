@@ -32,7 +32,8 @@ def main():
     # basic_model = Utils(train_data, val_data, test_data, resnet18)
 
     # criterion = torch.nn.BCEWithLogitsLoss()
-    criterion = torch.nn.MSELoss()
+    criterion = torch.nn.CrossEntropyLoss()
+    # criterion = torch.nn.MSELoss()
 
     for epoch in epochs:
         for lr in learning_rates:
@@ -40,7 +41,7 @@ def main():
             # optimizer = torch.optim.Adam(basic_model.parameters(), lr=lr)
             for batch_size in batch_size:
                 print("Max Epochs:", epoch, "Learning Rate:", lr, "Batch Size:", batch_size)
-                trained_model = basic_model.train(epoch, 8, criterion, optimizer)
+                trained_model = basic_model.train(50, batch_size, criterion, optimizer)
 
 
 def define_gpu(minimum_memory_mb=3800):
