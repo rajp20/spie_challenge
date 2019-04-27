@@ -31,19 +31,19 @@ def main():
     # resnet18.fc = torch.nn.Linear(in_features=512, out_features=1)
     # basic_model = Utils(train_data, val_data, test_data, resnet18)
 
-    criterion = torch.nn.BCEWithLogitsLoss()
-    # criterion = torch.nn.MSELoss()
+    # criterion = torch.nn.BCEWithLogitsLoss()
+    criterion = torch.nn.MSELoss()
 
     for epoch in epochs:
         for batch_size in batch_size:
-            # optimizer = torch.optim.Adam(basic_model.parameters(), lr=lr)
             for lr in learning_rates:
-                optimizer = torch.optim.SGD(basic_model.parameters(), lr=lr, momentum=0.2, nesterov=True)
+                # optimizer = torch.optim.SGD(basic_model.parameters(), lr=lr, momentum=0.9, nesterov=True)
+                optimizer = torch.optim.Adam(basic_model.parameters(), lr=lr)
                 print("Max Epochs:", epoch, "Learning Rate:", lr, "Batch Size:", batch_size)
                 trained_model = basic_model.train(epoch, batch_size, criterion, optimizer)
 
 
-def define_gpu(minimum_memory_mb=3800):
+def define_gpu(minimum_memory_mb=1800):
     gpu_to_use = 0
     try:
         print('GPU already assigned before: ' + str(os.environ['CUDA_VISIBLE_DEVICES']))
