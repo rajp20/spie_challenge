@@ -35,10 +35,10 @@ def main():
     # criterion = torch.nn.MSELoss()
 
     for epoch in epochs:
-        for lr in learning_rates:
-            optimizer = torch.optim.SGD(basic_model.parameters(), lr=lr, momentum=0.2, nesterov=True)
+        for batch_size in batch_size:
             # optimizer = torch.optim.Adam(basic_model.parameters(), lr=lr)
-            for batch_size in batch_size:
+            for lr in learning_rates:
+                optimizer = torch.optim.SGD(basic_model.parameters(), lr=lr, momentum=0.2, nesterov=True)
                 print("Max Epochs:", epoch, "Learning Rate:", lr, "Batch Size:", batch_size)
                 trained_model = basic_model.train(epoch, batch_size, criterion, optimizer)
 
