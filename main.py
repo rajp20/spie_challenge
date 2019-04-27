@@ -40,10 +40,10 @@ def main():
             # optimizer = torch.optim.Adam(basic_model.parameters(), lr=lr)
             for batch_size in batch_size:
                 print("Max Epochs:", epoch, "Learning Rate:", lr, "Batch Size:", batch_size)
-                trained_model = basic_model.train(50, batch_size, criterion, optimizer)
+                trained_model = basic_model.train(epoch, batch_size, criterion, optimizer)
 
 
-def define_gpu(minimum_memory_mb=1800):
+def define_gpu(minimum_memory_mb=3800):
     gpu_to_use = 0
     try:
         print('GPU already assigned before: ' + str(os.environ['CUDA_VISIBLE_DEVICES']))

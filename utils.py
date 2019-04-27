@@ -36,7 +36,7 @@ class Utils:
 
             score = self.validate(model, debug)
             if debug:
-                print("Epoch:", epoch, "Val Loss:", score, "Loss:", np.mean(losses))
+                print("Epoch:", epoch, "Prediction Probability:", score, "Training Loss:", np.mean(losses))
             if score > best_score:
                 best_score = score
                 self.best_model = copy.deepcopy(model)
@@ -58,7 +58,7 @@ class Utils:
             for image, label in val_loader:
                 image = image.cuda()
                 predicted = model(image)
-                # logit_predicted = torch.sigmoid(logit_predicted)
+                logit_predicted = torch.sigmoid(logit_predicted)
                 logits_predicted.append(predicted.cpu().detach().numpy())
                 labels.append(label.cpu().detach().numpy())
                 # returns a list of scores, one for each of the labels
