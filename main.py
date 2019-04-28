@@ -39,7 +39,7 @@ def main():
             model = Utils(train_data, val_data, test_data, resnet)
         elif sys.argv[2] == 'vgg':
             print("Running VGG")
-            vgg = models.vgg13(pretrained=True)
+            vgg = models.vgg11(pretrained=True)
             model = Utils(train_data, val_data, test_data, vgg)
         else:
             model = Utils(train_data, val_data, test_data, BaselineConvNet())
@@ -51,8 +51,10 @@ def main():
     for epoch in epochs:
         for batch_size in batch_size:
             for lr in learning_rates:
-                # optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
                 optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+                if len(sys.argv) > 3:
+                    if sys.argv[3] == 'sgd':
+                        optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
                 print("Max Epochs:", epoch, "Learning Rate:", lr, "Batch Size:", batch_size)
                 trained_model = model.train(epoch, batch_size, criterion, optimizer)
 
