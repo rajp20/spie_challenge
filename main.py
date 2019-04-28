@@ -31,6 +31,7 @@ def main():
     learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
     batch_size = [8, 16, 32]
 
+    model = Utils(train_data, val_data, test_data, BaselineConvNet())
     if len(sys.argv) > 2:
         if sys.argv[2] == 'resnet':
             print("Running ResNet")
@@ -41,9 +42,6 @@ def main():
             print("Running VGG")
             vgg = models.vgg13(pretrained=True)
             model = Utils(train_data, val_data, test_data, vgg)
-    else:
-        print("Running Basic")
-        model = Utils(train_data, val_data, test_data, BaselineConvNet())
 
     criterion = torch.nn.BCEWithLogitsLoss()
 
