@@ -42,8 +42,8 @@ def main():
     for epoch in epochs:
         for batch_size in batch_size:
             for lr in learning_rates:
-                optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
-                # optimizer = torch.optim.Adam(basic_model.parameters(), lr=0.01)
+                # optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
+                optimizer = torch.optim.Adam(model.parameters(), lr=lr)
                 print("Max Epochs:", epoch, "Learning Rate:", lr, "Batch Size:", batch_size)
                 trained_model = model.train(epoch, batch_size, criterion, optimizer)
 
