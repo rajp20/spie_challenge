@@ -35,7 +35,7 @@ def main():
         if sys.argv[2] == 'resnet':
             print("Running ResNet")
             resnet = models.resnet18(pretrained=True)
-            resnet.fc = torch.nn.Linear(in_features=512, out_features=1)
+            resnet.fc = torch.nn.Linear(in_features=51200, out_features=1)
             model = Utils(train_data, val_data, test_data, resnet)
         elif sys.argv[2] == 'vgg':
             print("Running VGG")
