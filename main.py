@@ -18,7 +18,8 @@ def main():
     :return:
     """
     gpu_mem = 1800
-    if len(sys.argv) is 2 and sys.argv[1] is "cade":
+    if len(sys.argv) == 2 and sys.argv[1] == 'cade':
+        print("GPU Mem Setting:", sys.argv[1])
         gpu_mem = 3800
     define_gpu(minimum_memory_mb=gpu_mem)
 
@@ -30,11 +31,18 @@ def main():
     learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
     batch_size = [8, 16, 32]
 
-    if len(sys.argv) is 3 and sys.argv[2] is "resnet":
+    print(sys.argv[2], len(sys.argv))
+    if len(sys.argv) == 3 and sys.argv[2] == 'resnet':
+        print("Running ResNet")
         resnet = models.resnet50(pretrained=True)
         resnet.fc = torch.nn.Linear(in_features=51200, out_features=1)
         model = Utils(train_data, val_data, test_data, resnet)
+    elif len(sys.argv) == 3 and sys.argv[2] == 'vgg':
+        print("Running VGG")
+        vgg = models.vgg13(pretrained=True)
+        model = Utils(train_data, val_data, test_data, vgg)
     else:
+        print("Running Basic")
         model = Utils(train_data, val_data, test_data, BaselineConvNet())
 
     criterion = torch.nn.BCEWithLogitsLoss()
