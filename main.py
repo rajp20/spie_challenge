@@ -65,7 +65,7 @@ def main():
     scores_figure_ax = scores_figure.add_subplot(111)
 
     epochs = 150
-    learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
+    learning_rates = [0.00001, 0.0001, 0.001]
     batch_size = [4, 8, 16, 32]
 
     for lr in learning_rates:
