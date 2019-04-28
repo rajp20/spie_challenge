@@ -16,6 +16,8 @@ class Utils:
         model = copy.deepcopy(self.original_model).cuda()
         train_loader = torch.utils.data.DataLoader(self.train_data, shuffle=True, batch_size=batch_size, num_workers=4)
         best_score = 0.0
+        epoch_scores = []
+        epoch_losses = []
 
         print("Running epochs... ")
         for epoch in range(max_epochs):
@@ -35,13 +37,16 @@ class Utils:
                 losses.append(loss.item())
 
             score = self.validate(model, debug)
+            mean_loss = np.mean(losses)
+            epoch_scores.append(score)
+            epoch_losses.append(losses)
             if debug:
-                print("Epoch:", epoch, "Prediction Probability:", score, "Training Loss:", np.mean(losses))
+                print("Epoch:", epoch, "Prediction Probability:", score, "Training Loss:", mean_loss)
             if score > best_score:
                 best_score = score
                 self.best_model = copy.deepcopy(model)
         print("Done.\n")
-        return self.best_model
+        return self.best_model, epoch_losses, epoch_scores
 
     def validate(self, model, debug=True):
         val_loader = torch.utils.data.DataLoader(self.val_data, shuffle=True, batch_size=1, num_workers=4)

@@ -2,7 +2,7 @@ import getpass
 import os
 import torch
 import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import torch.nn.functional as F
 import sys
 import copy
@@ -35,7 +35,7 @@ def main():
         if sys.argv[2] == 'resnet':
             print("Running ResNet")
             resnet = models.resnet18(pretrained=True)
-            resnet.fc = torch.nn.Linear(in_features=51200, out_features=1)
+            resnet.fc = torch.nn.Linear(in_features=512, out_features=1)
             model = Utils(train_data, val_data, test_data, resnet)
         elif sys.argv[2] == 'vgg':
             print("Running VGG")
@@ -52,15 +52,44 @@ def main():
     # criterion = torch.nn.BCEWithLogitsLoss()
     criterion = torch.nn.MSELoss()
 
-    for epoch in epochs:
-        for batch_size in batch_size:
-            for lr in learning_rates:
-                optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-                if len(sys.argv) > 3:
-                    if sys.argv[3] == 'sgd':
-                        optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
-                print("Max Epochs:", epoch, "Learning Rate:", lr, "Batch Size:", batch_size)
-                trained_model = model.train(epoch, batch_size, criterion, optimizer)
+    # for epoch in epochs:
+    #     for batch_size in batch_size:
+    #         for lr in learning_rates:
+    #             optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    #             if len(sys.argv) > 3:
+    #                 if sys.argv[3] == 'sgd':
+    #                     optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
+    #             print("Max Epochs:", epoch, "Learning Rate:", lr, "Batch Size:", batch_size)
+    #             trained_model = model.train(epoch, batch_size, criterion, optimizer)
+
+    losses_figure = plt.figure()
+    losses_figure_ax = losses_figure.add_subplot(111)
+
+    scores_figure = plt.figure()
+    scores_figure_ax = scores_figure.add_subplot(111)
+
+    for lr in learning_rates:
+        optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+        if len(sys.argv) > 3:
+            if sys.argv[3] == 'sgd':
+                optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
+        print("Learning Rate:", lr)
+        trained_model, losses, scores = model.train(1, 4, criterion, optimizer)
+        label = "Learning Rate: " + str(lr)
+        losses_figure_ax.plot(range(150), losses, label=label)
+        scores_figure_ax.plot(range(150), scores, label=label)
+
+    losses_figure.savefig("Losses_150e.png")
+    losses_figure_ax.set_title("Losses vs. Epochs")
+    losses_figure_ax.set_xlabel("Epochs")
+    losses_figure_ax.set_ylabel("Losses")
+    losses_figure_ax.legend()
+
+    scores_figure.savefig("Scores_150e.png")
+    scores_figure_ax.set_title("Scores vs. Epochs")
+    scores_figure_ax.set_xlabel("Epochs")
+    scores_figure_ax.set_ylabel("Losses")
+    scores_figure_ax.legend()
 
 
 def define_gpu(minimum_memory_mb=1800):
