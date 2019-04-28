@@ -29,7 +29,7 @@ def main():
 
     epochs = [10, 50, 100]
     learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
-    batch_size = [8, 16, 32]
+    batch_size = [4, 8, 16, 32]
 
     if len(sys.argv) > 2:
         if sys.argv[2] == 'resnet':
