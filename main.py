@@ -40,6 +40,9 @@ def main():
         elif sys.argv[2] == 'vgg':
             print("Running VGG")
             vgg = models.vgg11(pretrained=True)
+            vgg_modules = list(vgg.children())
+            vgg_modules.append(torch.nn.Linear(in_features=1000, out_features=1))
+            vgg = torch.nn.Sequential(*vgg_modules)
             model = Utils(train_data, val_data, test_data, vgg)
         else:
             model = Utils(train_data, val_data, test_data, BaselineConvNet())
