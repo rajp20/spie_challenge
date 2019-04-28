@@ -49,7 +49,8 @@ def main():
     else:
         model = Utils(train_data, val_data, test_data, BaselineConvNet())
 
-    criterion = torch.nn.BCEWithLogitsLoss()
+    # criterion = torch.nn.BCEWithLogitsLoss()
+    criterion = torch.nn.MSELoss()
 
     for epoch in epochs:
         for batch_size in batch_size:
