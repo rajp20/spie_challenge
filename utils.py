@@ -6,14 +6,14 @@ import sklearn.metrics as metrics
 
 class Utils:
     def __init__(self, train_data, val_data, test_data, model):
-        self.original_model = model.cuda()
+        self.original_model = model
         self.best_model = model
         self.train_data = train_data
         self.test_data = test_data
         self.val_data = val_data
 
     def train(self, max_epochs, batch_size, criterion, optimizer, debug=True):
-        model = copy.deepcopy(self.original_model)
+        model = copy.deepcopy(self.original_model).cuda()
         train_loader = torch.utils.data.DataLoader(self.train_data, shuffle=True, batch_size=batch_size, num_workers=4)
         best_score = 0.0
 
