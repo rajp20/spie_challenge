@@ -26,26 +26,26 @@ def main():
     val_data = BreastPathQDataSet(split="val")
     test_data = BreastPathQDataSet(split="test")
 
-    epochs = [5, 50, 100]
+    epochs = [10, 50, 100]
     learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
     batch_size = [8, 16, 32]
 
     if len(sys.argv) is 3 and sys.argv[2] is "resnet":
-        resnet18 = models.resnet18(pretrained=True)
-        resnet18.fc = torch.nn.Linear(in_features=51200, out_features=1)
-        basic_model = Utils(train_data, val_data, test_data, resnet18)
+        resnet = models.resnet50(pretrained=True)
+        resnet.fc = torch.nn.Linear(in_features=51200, out_features=1)
+        model = Utils(train_data, val_data, test_data, resnet)
     else:
-        basic_model = Utils(train_data, val_data, test_data, BaselineConvNet())
+        model = Utils(train_data, val_data, test_data, BaselineConvNet())
 
     criterion = torch.nn.BCEWithLogitsLoss()
 
     for epoch in epochs:
         for batch_size in batch_size:
             for lr in learning_rates:
-                optimizer = torch.optim.SGD(basic_model.parameters(), lr=lr, momentum=0.9, nesterov=True)
+                optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
                 # optimizer = torch.optim.Adam(basic_model.parameters(), lr=0.01)
                 print("Max Epochs:", epoch, "Learning Rate:", lr, "Batch Size:", batch_size)
-                trained_model = basic_model.train(epoch, batch_size, criterion, optimizer)
+                trained_model = model.train(epoch, batch_size, criterion, optimizer)
 
 
 def define_gpu(minimum_memory_mb=1800):
@@ -58,7 +58,7 @@ def define_gpu(minimum_memory_mb=1800):
     torch.cuda.empty_cache()
     os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_to_use)
     print('Chosen GPU: ' + str(0))
-    x = torch.rand((256,1024,minimum_memory_mb-500)).cuda()
+    x = torch.rand((256, 1024, minimum_memory_mb-500)).cuda()
     del x
     x = torch.rand((1, 1)).cuda()
     del x
