@@ -27,10 +27,6 @@ def main():
     val_data = BreastPathQDataSet(split="val")
     test_data = BreastPathQDataSet(split="test")
 
-    epochs = [10, 50, 100]
-    learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
-    batch_size = [4, 8, 16, 32]
-
     if len(sys.argv) > 2:
         if sys.argv[2] == 'resnet':
             print("Running ResNet")
@@ -68,28 +64,33 @@ def main():
     scores_figure = plt.figure()
     scores_figure_ax = scores_figure.add_subplot(111)
 
+    epochs = 150
+    learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
+    batch_size = [4, 8, 16, 32]
+
     for lr in learning_rates:
         optimizer = torch.optim.Adam(model.parameters(), lr=lr)
         if len(sys.argv) > 3:
             if sys.argv[3] == 'sgd':
                 optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
         print("Learning Rate:", lr)
-        trained_model, losses, scores = model.train(1, 4, criterion, optimizer)
-        label = "Learning Rate: " + str(lr)
-        losses_figure_ax.plot(range(150), losses, label=label)
-        scores_figure_ax.plot(range(150), scores, label=label)
+        trained_model, losses, scores = model.train(epochs, 4, criterion, optimizer)
 
-    losses_figure.savefig("Losses_150e.png")
+        label = "Learning Rate: " + str(lr)
+        losses_figure_ax.plot(range(0, epochs), losses, label=label)
+        scores_figure_ax.plot(range(0, epochs), scores, label=label)
+
     losses_figure_ax.set_title("Losses vs. Epochs")
     losses_figure_ax.set_xlabel("Epochs")
     losses_figure_ax.set_ylabel("Losses")
     losses_figure_ax.legend()
+    losses_figure.savefig("Losses_150e.png")
 
-    scores_figure.savefig("Scores_150e.png")
     scores_figure_ax.set_title("Scores vs. Epochs")
     scores_figure_ax.set_xlabel("Epochs")
     scores_figure_ax.set_ylabel("Losses")
     scores_figure_ax.legend()
+    scores_figure.savefig("Scores_150e.png")
 
 
 def define_gpu(minimum_memory_mb=1800):
