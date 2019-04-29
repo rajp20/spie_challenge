@@ -35,7 +35,7 @@ class Utils:
                 optimizer.step()
                 losses.append(loss.item())
 
-            score, auc = self.validate(model, debug)
+            score = self.validate(model, debug)
             mean_loss = np.mean(losses)
             epoch_scores.append(score)
             epoch_losses.append(mean_loss)
