@@ -46,8 +46,8 @@ def main():
     epochs = 10
     learning_rates = [0.1, 0.01, 0.001, 0.0001]
     batch_size = [4, 8, 16, 32]
-    criterion = torch.nn.BCEWithLogitsLoss()
-    # criterion = torch.nn.MSELoss()
+    # criterion = torch.nn.BCEWithLogitsLoss()
+    criterion = torch.nn.MSELoss()
     utils = Utils(train_data, val_data, test_data)
 
     for lr in learning_rates:
