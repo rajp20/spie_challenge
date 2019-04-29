@@ -27,13 +27,6 @@ def main():
     val_data = BreastPathQDataSet(split="val")
     test_data = BreastPathQDataSet(split="test")
 
-    learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
-    batch_size = [4, 8, 16, 32]
-
-
-    # criterion = torch.nn.BCEWithLogitsLoss()
-    criterion = torch.nn.MSELoss()
-
     # for epoch in epochs:
     #     for batch_size in batch_size:
     #         for lr in learning_rates:
@@ -51,9 +44,14 @@ def main():
     scores_figure_ax = scores_figure.add_subplot(111)
 
     epochs = 10
+    learning_rates = [0.1, 0.01, 0.001, 0.0001]
+    batch_size = [4, 8, 16, 32]
+    criterion = torch.nn.BCEWithLogitsLoss()
+    # criterion = torch.nn.MSELoss()
     utils = Utils(train_data, val_data, test_data)
 
     for lr in learning_rates:
+        model = BaselineConvNet()
         if len(sys.argv) > 2:
             if sys.argv[2] == 'resnet':
                 print("Running ResNet")
@@ -67,11 +65,6 @@ def main():
                 vgg_modules.append(torch.nn.Linear(in_features=1000, out_features=1))
                 vgg = torch.nn.Sequential(*vgg_modules)
                 model = vgg
-            else:
-                model = BaselineConvNet()
-        else:
-
-            model = BaselineConvNet()
 
         optimizer = torch.optim.Adam(model.parameters(), lr=lr)
         if len(sys.argv) > 3:
@@ -79,7 +72,7 @@ def main():
                 optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
 
         print("Learning Rate:", lr)
-        trained_model, losses, scores = utils.train(model, epochs, 4, criterion, optimizer)
+        trained_model, losses, scores = utils.train(model, epochs, 1, criterion, optimizer)
         
         label = "Learning Rate: " + str(lr)
         losses_figure_ax.plot(range(0, epochs), losses, label=label)

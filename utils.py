@@ -29,7 +29,7 @@ class Utils:
 
                 images = images.cuda()
                 out = model(images).cpu()
-                out = torch.sigmoid(out)
+                # out = torch.sigmoid(out)
                 loss = criterion(out, labels)
                 loss.backward()
 
@@ -42,7 +42,7 @@ class Utils:
             epoch_losses.append(mean_loss)
             if debug:
                 print("Epoch:", epoch, "Prediction Probability:", score, "Training Loss:", mean_loss)
-            if mean_loss > best_score:
+            if score > best_score:
                 best_score = score
                 best_model = copy.deepcopy(model)
         print("Done.\n")
@@ -63,7 +63,7 @@ class Utils:
             for image, label in val_loader:
                 image = image.cuda()
                 predicted = model(image)
-                predicted = torch.sigmoid(predicted)
+                print(predicted, label)
                 logits_predicted.append(predicted.cpu().detach().numpy())
                 labels.append(label.cpu().detach().numpy())
                 # returns a list of scores, one for each of the labels
@@ -191,7 +191,8 @@ class Utils:
 
         tot = (n * (n - 1)) // 2
         if tot == u or tot == v:
-            return (np.nan, np.nan)  # Special case for all ties in both ranks
+            return 0
+            # return (np.nan, np.nan)  # Special case for all ties in both ranks
 
         p_k = (((tot - (v + u - t)) - 2.0 * exchanges) / (tot - u) + 1) / 2
 
