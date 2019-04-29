@@ -11,6 +11,7 @@ class Utils:
         self.val_data = val_data
 
     def train(self, model, max_epochs, batch_size, criterion, optimizer, debug=True):
+        model = model.cuda()
         train_loader = torch.utils.data.DataLoader(self.train_data, shuffle=True, batch_size=batch_size, num_workers=4)
         best_score = 0.0
         epoch_scores = []
