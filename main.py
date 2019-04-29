@@ -96,7 +96,7 @@ def main():
     scores_figure_ax.set_xlabel("Epochs")
     scores_figure_ax.set_ylabel("Losses")
     scores_figure_ax.legend()
-    scores_figure.savefig("Scores_150e.png")s
+    scores_figure.savefig("Scores_150e.png")
 
 
 def define_gpu(minimum_memory_mb=1800):
