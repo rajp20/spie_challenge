@@ -35,12 +35,12 @@ class Utils:
                 optimizer.step()
                 losses.append(loss.item())
 
-            score = self.validate(model, debug)
+            score, auc = self.validate(model, debug)
             mean_loss = np.mean(losses)
             epoch_scores.append(score)
             epoch_losses.append(mean_loss)
             if debug:
-                print("Epoch:", epoch, "Prediction Probability:", score, "Training Loss:", mean_loss)
+                print("Epoch:", epoch, "Prediction Probability:", score, "AUC:", auc,"Training Loss:", mean_loss)
             if score > best_score:
                 best_score = score
                 best_model = copy.deepcopy(model)
@@ -57,6 +57,7 @@ class Utils:
         with torch.no_grad():
             logits_predicted = []
             labels = []
+
             # run through several batches, does inference for each and store inference results
             # and store both target labels and inferenced scores
             for image, label in val_loader:
@@ -64,6 +65,7 @@ class Utils:
                 out = model(image)
                 logits_predicted.append(out.cpu().detach().numpy())
                 labels.append(label.cpu().detach().numpy())
+
                 # returns a list of scores, one for each of the labels
         return self.predict_prob(labels, logits_predicted, initial_lexsort=True)
 

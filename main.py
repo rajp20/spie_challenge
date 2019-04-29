@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import torch.nn.functional as F
 import sys
 import copy
+import random
 import torchvision.models as models
 from data_loader import BreastPathQDataSet
 from basic_conv import BaselineConvNet
@@ -22,13 +23,14 @@ def main():
     optimizer_type = "adam"
     if len(sys.argv) > 1:
         machine = sys.argv[1]
-        print("Machine:", machine)
     if len(sys.argv) > 2:
         model_type = sys.argv[2]
-        print("Model:", model_type)
     if len(sys.argv) > 3:
         optimizer_type = sys.argv[3]
-        print("Optimizer:", optimizer_type)
+
+    print("Machine:", machine)
+    print("Model:", model_type)
+    print("Optimizer:", optimizer_type)
     print()
 
     if machine == 'local':
@@ -58,8 +60,8 @@ def main():
     scores_figure_ax = scores_figure.add_subplot(111)
 
     epochs = 10
-    learning_rates = [0.001, 0.1, 1, 0.01, 0.0001]
-    batch_size = [4, 8, 16, 32]
+    learning_rates = [0.01, random.uniform(0.01, 0.0001), random.uniform(0, 0.0001), random.uniform(0, 0.0001), 0.0001]
+    batch_size = [4, 16]
     # criterion = torch.nn.BCEWithLogitsLoss()
     criterion = torch.nn.MSELoss()
     utils = Utils(train_data, val_data, test_data)
@@ -72,12 +74,6 @@ def main():
                 resnet = models.resnet18(pretrained=True)
                 resnet.fc = torch.nn.Linear(in_features=512, out_features=1)
                 model = resnet
-            elif model_type == 'vgg':
-                vgg = models.vgg11_bn(pretrained=True)
-                vgg_modules = list(vgg.children())
-                vgg_modules.append(torch.nn.Linear(in_features=1000, out_features=1))
-                vgg = torch.nn.Sequential(*vgg_modules)
-                model = vgg
 
             if optimizer_type == 'adam':
                 optimizer = torch.optim.Adam(model.parameters(), lr=lr)
@@ -87,7 +83,7 @@ def main():
             print("Learning Rate:", lr)
             trained_model, losses, scores = utils.train(model, epochs, batch, criterion, optimizer)
 
-            label = "Learning Rate: " + str(lr)
+            label = "Learning Rate: " + str(lr) + ", Batch Size: " + str(batch)
             losses_figure_ax.plot(range(0, epochs), losses, label=label)
             scores_figure_ax.plot(range(0, epochs), scores, label=label)
 
