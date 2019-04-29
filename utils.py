@@ -37,6 +37,8 @@ class Utils:
 
             score = self.validate(model, debug)
             mean_loss = np.mean(losses)
+            if score > 5:
+                score = 5
             epoch_scores.append(score)
             epoch_losses.append(mean_loss)
             if debug:

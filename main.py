@@ -84,8 +84,8 @@ def main():
             trained_model, losses, scores = utils.train(model, epochs, batch, criterion, optimizer)
 
             label = "Learning Rate: " + str(lr) + ", Batch Size: " + str(batch)
-            losses_figure_ax.plot(range(0, epochs), losses, label=label)
-            scores_figure_ax.plot(range(0, epochs), scores, label=label)
+            losses_figure_ax.plot(range(0, len(losses)), losses, label=label)
+            scores_figure_ax.plot(range(0, len(scores)), scores, label=label)
 
     losses_figure_ax.set_title("Losses vs. Epochs")
     losses_figure_ax.set_xlabel("Epochs")
