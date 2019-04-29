@@ -40,7 +40,7 @@ class Utils:
             epoch_scores.append(score)
             epoch_losses.append(mean_loss)
             if debug:
-                print("Epoch:", epoch, "Prediction Probability:", score, "AUC:", auc,"Training Loss:", mean_loss)
+                print("Epoch:", epoch, "Prediction Probability:", score, "Training Loss:", mean_loss)
             if score > best_score:
                 best_score = score
                 best_model = copy.deepcopy(model)
