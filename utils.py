@@ -5,19 +5,17 @@ import sklearn.metrics as metrics
 
 
 class Utils:
-    def __init__(self, train_data, val_data, test_data, model):
-        self.original_model = model
-        self.best_model = model
+    def __init__(self, train_data, val_data, test_data):
         self.train_data = train_data
         self.test_data = test_data
         self.val_data = val_data
 
-    def train(self, max_epochs, batch_size, criterion, optimizer, debug=True):
-        model = copy.deepcopy(self.original_model).cuda()
+    def train(self, model, max_epochs, batch_size, criterion, optimizer, debug=True):
         train_loader = torch.utils.data.DataLoader(self.train_data, shuffle=True, batch_size=batch_size, num_workers=4)
         best_score = 0.0
         epoch_scores = []
         epoch_losses = []
+        best_model = None
 
         print("Running epochs... ")
         for epoch in range(max_epochs):
@@ -44,9 +42,9 @@ class Utils:
                 print("Epoch:", epoch, "Prediction Probability:", score, "Training Loss:", mean_loss)
             if score > best_score:
                 best_score = score
-                self.best_model = copy.deepcopy(model)
+                best_model = copy.deepcopy(model)
         print("Done.\n")
-        return self.best_model, epoch_losses, epoch_scores
+        return best_model, epoch_losses, epoch_scores
 
     def validate(self, model, debug=True):
         val_loader = torch.utils.data.DataLoader(self.val_data, shuffle=True, batch_size=1, num_workers=4)
@@ -200,6 +198,3 @@ class Utils:
     def evaluate(self):
         test_loader = torch.utils.data.DataLoader(self.test_data, shuffle=True, batch_size=1, num_workers=4)
         return
-
-    def parameters(self):
-        return self.original_model.parameters()

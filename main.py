@@ -31,24 +31,6 @@ def main():
     learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
     batch_size = [4, 8, 16, 32]
 
-    if len(sys.argv) > 2:
-        if sys.argv[2] == 'resnet':
-            print("Running ResNet")
-            resnet = models.resnet18(pretrained=True)
-            resnet.fc = torch.nn.Linear(in_features=512, out_features=1)
-            model = Utils(train_data, val_data, test_data, resnet)
-        elif sys.argv[2] == 'vgg':
-            print("Running VGG")
-            vgg = models.vgg11_bn(pretrained=True)
-            vgg_modules = list(vgg.children())
-            vgg_modules.append(torch.nn.Linear(in_features=1000, out_features=1))
-            vgg = torch.nn.Sequential(*vgg_modules)
-            model = Utils(train_data, val_data, test_data, vgg)
-        else:
-            model = Utils(train_data, val_data, test_data, BaselineConvNet())
-    else:
-        model = Utils(train_data, val_data, test_data, BaselineConvNet())
-
     # criterion = torch.nn.BCEWithLogitsLoss()
     criterion = torch.nn.MSELoss()
 
@@ -69,12 +51,35 @@ def main():
     scores_figure_ax = scores_figure.add_subplot(111)
 
     for lr in learning_rates:
+        if len(sys.argv) > 2:
+            if sys.argv[2] == 'resnet':
+                print("Running ResNet")
+                resnet = models.resnet18(pretrained=True)
+                resnet.fc = torch.nn.Linear(in_features=512, out_features=1)
+                utils = Utils(train_data, val_data, test_data)
+                model = resnet
+            elif sys.argv[2] == 'vgg':
+                print("Running VGG")
+                vgg = models.vgg11_bn(pretrained=True)
+                vgg_modules = list(vgg.children())
+                vgg_modules.append(torch.nn.Linear(in_features=1000, out_features=1))
+                vgg = torch.nn.Sequential(*vgg_modules)
+                utils = Utils(train_data, val_data, test_data)
+                model = vgg
+            else:
+                utils = Utils(train_data, val_data, test_data)
+                model = BaselineConvNet()
+        else:
+            utils = Utils(train_data, val_data, test_data)
+            model = BaselineConvNet()
+
         optimizer = torch.optim.Adam(model.parameters(), lr=lr)
         if len(sys.argv) > 3:
             if sys.argv[3] == 'sgd':
                 optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
+
         print("Learning Rate:", lr)
-        trained_model, losses, scores = model.train(1, 4, criterion, optimizer)
+        trained_model, losses, scores = utils.train(model, 1, 4, criterion, optimizer)
         label = "Learning Rate: " + str(lr)
         losses_figure_ax.plot(range(150), losses, label=label)
         scores_figure_ax.plot(range(150), scores, label=label)
