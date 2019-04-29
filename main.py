@@ -61,7 +61,7 @@ def main():
 
     epochs = 50
     learning_rates = [0.01, random.uniform(0.01, 0.0001), random.uniform(0, 0.0001), random.uniform(0, 0.0001), 0.0001]
-    batch_size = [4, 8, 16]
+    batch_size = [8, 16]
     # criterion = torch.nn.BCEWithLogitsLoss()
     criterion = torch.nn.MSELoss()
     utils = Utils(train_data, val_data, test_data)

@@ -13,7 +13,7 @@ class Utils:
     def train(self, model, max_epochs, batch_size, criterion, optimizer, debug=True):
         print("Training", "Max Epochs:", max_epochs, "Batch Size:", batch_size)
         model = model.cuda()
-        train_loader = torch.utils.data.DataLoader(self.train_data, shuffle=True, batch_size=batch_size, num_workers=4)
+        train_loader = torch.utils.data.DataLoader(self.train_data, shuffle=True, batch_size=batch_size, num_workers=2)
         best_score = 0.0
         epoch_scores = []
         epoch_losses = []
@@ -37,8 +37,8 @@ class Utils:
 
             score = self.validate(model, debug)
             mean_loss = np.mean(losses)
-            if score > 5:
-                score = 5
+            if mean_loss > 5:
+                mean_loss = 5
             epoch_scores.append(score)
             epoch_losses.append(mean_loss)
             if debug:
@@ -50,7 +50,7 @@ class Utils:
         return best_model, epoch_losses, epoch_scores
 
     def validate(self, model, debug=True):
-        val_loader = torch.utils.data.DataLoader(self.val_data, shuffle=True, batch_size=1, num_workers=4)
+        val_loader = torch.utils.data.DataLoader(self.val_data, shuffle=True, batch_size=1, num_workers=2)
         # toggle model to eval mode
         model.eval()
 
