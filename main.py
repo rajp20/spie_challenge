@@ -27,7 +27,6 @@ def main():
     val_data = BreastPathQDataSet(split="val")
     test_data = BreastPathQDataSet(split="test")
 
-    epochs = [10, 50, 100]
     learning_rates = [10, 1, 0.1, 0.01, 0.001, 0.0001]
     batch_size = [4, 8, 16, 32]
 
@@ -50,6 +49,8 @@ def main():
 
     scores_figure = plt.figure()
     scores_figure_ax = scores_figure.add_subplot(111)
+
+    epochs = 10
 
     for lr in learning_rates:
         if len(sys.argv) > 2:
