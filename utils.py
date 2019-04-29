@@ -29,7 +29,6 @@ class Utils:
 
                 images = images.cuda()
                 out = model(images).cpu()
-                out = torch.sigmoid(out)
                 loss = criterion(out, labels)
                 loss.backward()
 
@@ -63,7 +62,6 @@ class Utils:
             for image, label in val_loader:
                 image = image.cuda()
                 out = model(image)
-                out = torch.sigmoid(out)
                 logits_predicted.append(out.cpu().detach().numpy())
                 labels.append(label.cpu().detach().numpy())
                 # returns a list of scores, one for each of the labels

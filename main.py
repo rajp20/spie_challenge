@@ -17,9 +17,23 @@ def main():
     Main Function.
     :return:
     """
-    gpu_mem = 1800
-    if len(sys.argv) > 1 and sys.argv[1] == 'cade':
-        print("GPU Mem Setting:", sys.argv[1])
+    machine = "local"
+    model_type = "simple"
+    optimizer_type = "adam"
+    if len(sys.argv) > 1:
+        print("Machine:", machine)
+        machine = sys.argv[1]
+    if len(sys.argv) > 2:
+        print("Model:", model_type)
+        model_type = sys.argv[2]
+    if len(sys.argv) > 3:
+        print("Optimizer:", optimizer_type)
+        optimizer_type = sys.argv[3]
+    print()
+
+    if machine == 'local':
+        gpu_mem = 1800
+    elif machine == 'cade':
         gpu_mem = 3800
     define_gpu(minimum_memory_mb=gpu_mem)
 
@@ -44,32 +58,30 @@ def main():
     scores_figure_ax = scores_figure.add_subplot(111)
 
     epochs = 10
-    learning_rates = [0.1, 0.01, 0.001, 0.0001]
+    learning_rates = [0.001, 0.1, 1, 0.01, 0.0001]
     batch_size = [4, 8, 16, 32]
     # criterion = torch.nn.BCEWithLogitsLoss()
     criterion = torch.nn.MSELoss()
     utils = Utils(train_data, val_data, test_data)
 
     for lr in learning_rates:
-        model = BaselineConvNet()
-        if len(sys.argv) > 2:
-            if sys.argv[2] == 'resnet':
-                print("Running ResNet")
-                resnet = models.resnet18(pretrained=True)
-                resnet.fc = torch.nn.Linear(in_features=512, out_features=1)
-                model = resnet
-            elif sys.argv[2] == 'vgg':
-                print("Running VGG")
-                vgg = models.vgg11_bn(pretrained=True)
-                vgg_modules = list(vgg.children())
-                vgg_modules.append(torch.nn.Linear(in_features=1000, out_features=1))
-                vgg = torch.nn.Sequential(*vgg_modules)
-                model = vgg
+        if model_type == 'simple':
+            model = BaselineConvNet()
+        elif model_type == 'resnet':
+            resnet = models.resnet18(pretrained=True)
+            resnet.fc = torch.nn.Linear(in_features=512, out_features=1)
+            model = resnet
+        elif model_type == 'vgg':
+            vgg = models.vgg11_bn(pretrained=True)
+            vgg_modules = list(vgg.children())
+            vgg_modules.append(torch.nn.Linear(in_features=1000, out_features=1))
+            vgg = torch.nn.Sequential(*vgg_modules)
+            model = vgg
 
-        optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-        if len(sys.argv) > 3:
-            if sys.argv[3] == 'sgd':
-                optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
+        if optimizer_type == 'adam':
+            optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+        elif optimizer_type == 'sgd':
+            optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
 
         print("Learning Rate:", lr)
         trained_model, losses, scores = utils.train(model, epochs, 1, criterion, optimizer)
