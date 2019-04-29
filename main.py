@@ -51,6 +51,7 @@ def main():
     scores_figure_ax = scores_figure.add_subplot(111)
 
     epochs = 10
+    utils = Utils(train_data, val_data, test_data)
 
     for lr in learning_rates:
         if len(sys.argv) > 2:
@@ -58,7 +59,6 @@ def main():
                 print("Running ResNet")
                 resnet = models.resnet18(pretrained=True)
                 resnet.fc = torch.nn.Linear(in_features=512, out_features=1)
-                utils = Utils(train_data, val_data, test_data)
                 model = resnet
             elif sys.argv[2] == 'vgg':
                 print("Running VGG")
@@ -66,13 +66,11 @@ def main():
                 vgg_modules = list(vgg.children())
                 vgg_modules.append(torch.nn.Linear(in_features=1000, out_features=1))
                 vgg = torch.nn.Sequential(*vgg_modules)
-                utils = Utils(train_data, val_data, test_data)
                 model = vgg
             else:
-                utils = Utils(train_data, val_data, test_data)
                 model = BaselineConvNet()
         else:
-            utils = Utils(train_data, val_data, test_data)
+
             model = BaselineConvNet()
 
         optimizer = torch.optim.Adam(model.parameters(), lr=lr)
@@ -110,10 +108,6 @@ def define_gpu(minimum_memory_mb=1800):
     torch.cuda.empty_cache()
     os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_to_use)
     print('Chosen GPU: ' + str(0))
-    x = torch.rand((256, 1024, minimum_memory_mb-500)).cuda()
-    del x
-    x = torch.rand((1, 1)).cuda()
-    del x
 
 
 main()
