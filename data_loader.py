@@ -17,19 +17,13 @@ class BreastPathQDataSet(Dataset):
             self.image_path = "./datasets/breastpathq/datasets/validation/"
             self.label_path = "./datasets/breastpathq-test/val_labels.csv"
         elif split is "test":
-            self.image_path = "./datasets/breastpathq-test/test_patches/"
+            self.image_path = "./datasets/breastpathq/datasets/test/"
+            self.label_path = "./datasets/breastpathq/datasets/test_labels.csv"
 
-        if split is "train" or split is "val":
-            label_csv = pd.read_csv(self.label_path, skiprows=1)
-            for index, row in label_csv.iterrows():
-                key = str(int(row[0])) + "_" + str(int(row[1]))
-                self.dataset.append({"image": key, "label": row[2], "slide": int(row[0]), "rid": int(row[1])})
-        if split is "test":
-            for file in os.listdir(self.image_path):
-                file_name = os.fsdecode(file).replace(".tif", "")
-                file_name_split = file_name.split('_')
-                self.dataset.append({"image": file_name, "label": 0, "slide": int(file_name_split[0]),
-                                     "rid": int(file_name_split[1])})
+        label_csv = pd.read_csv(self.label_path, skiprows=1)
+        for index, row in label_csv.iterrows():
+            key = str(int(row[0])) + "_" + str(int(row[1]))
+            self.dataset.append({"image": key, "label": row[2], "slide": int(row[0]), "rid": int(row[1])})
 
     def __getitem__(self, index):
         set_of_transforms = transforms.Compose(

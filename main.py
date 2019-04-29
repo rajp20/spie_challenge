@@ -59,9 +59,9 @@ def main():
     scores_figure = plt.figure()
     scores_figure_ax = scores_figure.add_subplot(111)
 
-    epochs = 10
+    epochs = 50
     learning_rates = [0.01, random.uniform(0.01, 0.0001), random.uniform(0, 0.0001), random.uniform(0, 0.0001), 0.0001]
-    batch_size = [4, 16]
+    batch_size = [4, 8, 16]
     # criterion = torch.nn.BCEWithLogitsLoss()
     criterion = torch.nn.MSELoss()
     utils = Utils(train_data, val_data, test_data)
@@ -91,13 +91,13 @@ def main():
     losses_figure_ax.set_xlabel("Epochs")
     losses_figure_ax.set_ylabel("Losses")
     losses_figure_ax.legend()
-    losses_figure.savefig(model_type + "_" + optimizer + "_" + "Losses_150e.png")
+    losses_figure.savefig(model_type + "_" + optimizer_type + "_" + "Losses_150e.png")
 
     scores_figure_ax.set_title("Scores vs. Epochs")
     scores_figure_ax.set_xlabel("Epochs")
     scores_figure_ax.set_ylabel("Losses")
     scores_figure_ax.legend()
-    scores_figure.savefig(model_type + "_" + optimizer + "_" + "Scores_150e.png")
+    scores_figure.savefig(model_type + "_" + optimizer_type + "_" + "Scores_150e.png")
 
 
 def define_gpu(minimum_memory_mb=1800):
