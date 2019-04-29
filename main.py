@@ -21,14 +21,14 @@ def main():
     model_type = "simple"
     optimizer_type = "adam"
     if len(sys.argv) > 1:
-        print("Machine:", machine)
         machine = sys.argv[1]
+        print("Machine:", machine)
     if len(sys.argv) > 2:
-        print("Model:", model_type)
         model_type = sys.argv[2]
+        print("Model:", model_type)
     if len(sys.argv) > 3:
-        print("Optimizer:", optimizer_type)
         optimizer_type = sys.argv[3]
+        print("Optimizer:", optimizer_type)
     print()
 
     if machine == 'local':
