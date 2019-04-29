@@ -29,6 +29,7 @@ class Utils:
 
                 images = images.cuda()
                 out = model(images).cpu()
+                out = torch.sigmoid(out)
                 loss = criterion(out, labels)
                 loss.backward()
 
@@ -50,7 +51,7 @@ class Utils:
         return best_model, epoch_losses, epoch_scores
 
     def validate(self, model, debug=True):
-        val_loader = torch.utils.data.DataLoader(self.val_data, shuffle=True, batch_size=1, num_workers=2)
+        val_loader = torch.utils.data.DataLoader(self.val_data, shuffle=True, batch_size=2, num_workers=2)
         # toggle model to eval mode
         model.eval()
 
@@ -65,6 +66,7 @@ class Utils:
             for image, label in val_loader:
                 image = image.cuda()
                 out = model(image)
+                out = torch.sigmoid(out)
                 logits_predicted.append(out.cpu().detach().numpy())
                 labels.append(label.cpu().detach().numpy())
 
