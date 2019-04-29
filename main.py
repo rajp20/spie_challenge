@@ -64,31 +64,32 @@ def main():
     criterion = torch.nn.MSELoss()
     utils = Utils(train_data, val_data, test_data)
 
-    for lr in learning_rates:
-        if model_type == 'simple':
-            model = BaselineConvNet()
-        elif model_type == 'resnet':
-            resnet = models.resnet18(pretrained=True)
-            resnet.fc = torch.nn.Linear(in_features=512, out_features=1)
-            model = resnet
-        elif model_type == 'vgg':
-            vgg = models.vgg11_bn(pretrained=True)
-            vgg_modules = list(vgg.children())
-            vgg_modules.append(torch.nn.Linear(in_features=1000, out_features=1))
-            vgg = torch.nn.Sequential(*vgg_modules)
-            model = vgg
+    for batch in batch_size:
+        for lr in learning_rates:
+            if model_type == 'simple':
+                model = BaselineConvNet()
+            elif model_type == 'resnet':
+                resnet = models.resnet18(pretrained=True)
+                resnet.fc = torch.nn.Linear(in_features=512, out_features=1)
+                model = resnet
+            elif model_type == 'vgg':
+                vgg = models.vgg11_bn(pretrained=True)
+                vgg_modules = list(vgg.children())
+                vgg_modules.append(torch.nn.Linear(in_features=1000, out_features=1))
+                vgg = torch.nn.Sequential(*vgg_modules)
+                model = vgg
 
-        if optimizer_type == 'adam':
-            optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-        elif optimizer_type == 'sgd':
-            optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
+            if optimizer_type == 'adam':
+                optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+            elif optimizer_type == 'sgd':
+                optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
 
-        print("Learning Rate:", lr)
-        trained_model, losses, scores = utils.train(model, epochs, 1, criterion, optimizer)
-        
-        label = "Learning Rate: " + str(lr)
-        losses_figure_ax.plot(range(0, epochs), losses, label=label)
-        scores_figure_ax.plot(range(0, epochs), scores, label=label)
+            print("Learning Rate:", lr)
+            trained_model, losses, scores = utils.train(model, epochs, batch, criterion, optimizer)
+
+            label = "Learning Rate: " + str(lr)
+            losses_figure_ax.plot(range(0, epochs), losses, label=label)
+            scores_figure_ax.plot(range(0, epochs), scores, label=label)
 
     losses_figure_ax.set_title("Losses vs. Epochs")
     losses_figure_ax.set_xlabel("Epochs")
