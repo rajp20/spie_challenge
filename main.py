@@ -72,7 +72,7 @@ def main():
                 model = BaselineConvNet()
             elif model_type == 'resnet':
                 resnet = models.resnet18(pretrained=True)
-                resnet.fc = torch.nn.Linear(in_features=512, out_features=1)
+                resnet.fc = torch.nn.Linear(in_features=51200, out_features=1)
                 model = resnet
 
             if optimizer_type == 'adam':
