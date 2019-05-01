@@ -32,9 +32,6 @@ class ImprovedConvNet(torch.nn.Module):
     def forward(self, x):
         x = self.input(x)
 
-        x = self.relu(x)
-        x = self.maxpooling_layer(x)
-
         x = self.block_1_1(x)
         x = self.block_1_2(x)
         x = self.block_1_3(x)
