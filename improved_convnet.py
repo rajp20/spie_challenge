@@ -7,7 +7,7 @@ class ImprovedConvNet(torch.nn.Module):
         self.input = torch.nn.Conv2d(in_channels=3, out_channels=32, kernel_size=3)
 
         self.block_1_1 = torch.nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3)
-        self.block_1_2 = torch.nn.Conv2d(in_channels=64, out_channels=128, kernel_size=1)
+        self.block_1_2 = torch.nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3)
         self.block_1_3 = torch.nn.Conv2d(in_channels=128, out_channels=128, kernel_size=1)
 
         self.block_2_1 = torch.nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3)
