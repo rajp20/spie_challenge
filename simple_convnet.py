@@ -1,9 +1,9 @@
 import torch
 
 
-class RegressionModel(torch.nn.Module):
+class SimpleConvNet(torch.nn.Module):
     def __init__(self):
-        super(RegressionModel, self).__init__()
+        super(SimpleConvNet, self).__init__()
         self.convolution_layer_1 = torch.nn.Conv2d(in_channels=3, out_channels=16, kernel_size=4)
         self.relu = torch.nn.ReLU()
         self.maxpooling_layer = torch.nn.MaxPool2d(kernel_size=2)

@@ -9,7 +9,7 @@ import copy
 import random
 import torchvision.models as models
 from data_loader import BreastPathQDataSet
-from basic_conv import BaselineConvNet
+from simple_convnet import SimpleConvNet
 from utils import Utils
 from decimal import Decimal
 
@@ -61,7 +61,7 @@ def main():
     scores_figure_ax = scores_figure.add_subplot(111)
 
     epochs = 20
-    learning_rates = [0.01, random.uniform(0.01, 0.0001), random.uniform(0, 0.0001), random.uniform(0, 0.0001), 0.0001]
+    learning_rates = [random.uniform(0.01, 0.0001), random.uniform(0, 0.0001), random.uniform(0, 0.0001)]
 
     # criterion = torch.nn.BCEWithLogitsLoss()
     criterion = torch.nn.MSELoss()
@@ -74,7 +74,7 @@ def main():
     for batch in batch_size:
         for lr in learning_rates:
             if model_type == 'simple':
-                model = BaselineConvNet()
+                model = SimpleConvNet()
             elif model_type == 'resnet':
                 resnet = models.resnet18(pretrained=True)
                 resnet.fc = torch.nn.Linear(in_features=51200, out_features=1)
@@ -102,7 +102,7 @@ def main():
     scores_figure_ax.set_xlabel("Epochs")
     scores_figure_ax.set_ylabel("Losses")
     scores_figure_ax.legend()
-    scores_figure.savefig(model_type + "_" + optimizer_type + "_Scores_" + str(epochs) + "e.png")
+    scores_figure.savefig("./graphs/" + model_type + "_" + optimizer_type + "_Scores_" + str(epochs) + "e.png")
 
 
 def define_gpu(minimum_memory_mb=1800):
