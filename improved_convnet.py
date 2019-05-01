@@ -1,9 +1,9 @@
 import torch
 
 
-class SimpleConvNet(torch.nn.Module):
+class ImprovedConvNet(torch.nn.Module):
     def __init__(self):
-        super(SimpleConvNet, self).__init__()
+        super(ImprovedConvNet, self).__init__()
         self.input = torch.nn.Conv2d(in_channels=3, out_channels=16, kernel_size=3)
 
         self.block_1_1 = torch.nn.Conv2d(in_channels=16, out_channels=16, kernel_size=1)

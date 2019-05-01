@@ -10,6 +10,7 @@ import random
 import torchvision.models as models
 from data_loader import BreastPathQDataSet
 from simple_convnet import SimpleConvNet
+from improved_convnet import ImprovedConvNet
 from utils import Utils
 from decimal import Decimal
 
@@ -76,6 +77,10 @@ def main():
             if model_type == 'simple':
                 model = SimpleConvNet()
             elif model_type == 'resnet':
+                resnet = models.resnet18(pretrained=True)
+                resnet.fc = torch.nn.Linear(in_features=51200, out_features=1)
+                model = resnet
+            elif model_type == 'improved':
                 resnet = models.resnet18(pretrained=True)
                 resnet.fc = torch.nn.Linear(in_features=51200, out_features=1)
                 model = resnet
