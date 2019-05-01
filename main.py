@@ -11,6 +11,7 @@ import torchvision.models as models
 from data_loader import BreastPathQDataSet
 from basic_conv import BaselineConvNet
 from utils import Utils
+from decimal import Decimal
 
 
 def main():
@@ -59,12 +60,16 @@ def main():
     scores_figure = plt.figure()
     scores_figure_ax = scores_figure.add_subplot(111)
 
-    epochs = 50
+    epochs = 20
     learning_rates = [0.01, random.uniform(0.01, 0.0001), random.uniform(0, 0.0001), random.uniform(0, 0.0001), 0.0001]
-    batch_size = [8, 16]
+
     # criterion = torch.nn.BCEWithLogitsLoss()
     criterion = torch.nn.MSELoss()
     utils = Utils(train_data, val_data, test_data)
+
+    batch_size = [8, 16]
+    if optimizer_type == 'sgd':
+        batch_size = [16, 32]
 
     for batch in batch_size:
         for lr in learning_rates:
@@ -82,22 +87,22 @@ def main():
 
             print("Learning Rate:", lr)
             trained_model, losses, scores = utils.train(model, epochs, batch, criterion, optimizer)
-
-            label = "Learning Rate: " + str(lr) + ", Batch Size: " + str(batch)
+            lr_string = '%.2E' % Decimal(str(lr))
+            label = "Learning Rate: " + lr_string + ", Batch Size: " + str(batch)
             losses_figure_ax.plot(range(0, len(losses)), losses, label=label)
             scores_figure_ax.plot(range(0, len(scores)), scores, label=label)
 
-    losses_figure_ax.set_title("Losses vs. Epochs")
+    losses_figure_ax.set_title("Losses vs. Epochs (" + model_type + "+" + optimizer_type + ")")
     losses_figure_ax.set_xlabel("Epochs")
     losses_figure_ax.set_ylabel("Losses")
     losses_figure_ax.legend()
-    losses_figure.savefig(model_type + "_" + optimizer_type + "_" + "Losses_150e.png")
+    losses_figure.savefig(model_type + "_" + optimizer_type + "_Losses_" + str(epochs) + "e.png")
 
     scores_figure_ax.set_title("Scores vs. Epochs")
     scores_figure_ax.set_xlabel("Epochs")
     scores_figure_ax.set_ylabel("Losses")
     scores_figure_ax.legend()
-    scores_figure.savefig(model_type + "_" + optimizer_type + "_" + "Scores_150e.png")
+    scores_figure.savefig(model_type + "_" + optimizer_type + "_Scores_" + str(epochs) + "e.png")
 
 
 def define_gpu(minimum_memory_mb=1800):
