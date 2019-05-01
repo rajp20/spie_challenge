@@ -30,14 +30,11 @@ def main():
     if len(sys.argv) > 3:
         optimizer_type = sys.argv[3]
 
-    print("Machine:", machine)
-    print("Model:", model_type)
-    print("Optimizer:", optimizer_type)
-    print()
-
     if machine == 'local':
+        print("Machine:", machine)
         gpu_mem = 1800
     elif machine == 'cade':
+        print("Machine:", machine)
         gpu_mem = 3800
     define_gpu(minimum_memory_mb=gpu_mem)
 
@@ -75,20 +72,24 @@ def main():
     for batch in batch_size:
         for lr in learning_rates:
             if model_type == 'simple':
+                print("Model:", model_type)
                 model = SimpleConvNet()
             elif model_type == 'resnet':
+                print("Model:", model_type)
                 resnet = models.resnet18(pretrained=True)
                 resnet.fc = torch.nn.Linear(in_features=51200, out_features=1)
                 model = resnet
             elif model_type == 'improved':
-                resnet = models.resnet18(pretrained=True)
-                resnet.fc = torch.nn.Linear(in_features=51200, out_features=1)
-                model = resnet
+                print("Model:", model_type)
+                model = ImprovedConvNet()
 
             if optimizer_type == 'adam':
+                print("Optimizer:", optimizer_type)
                 optimizer = torch.optim.Adam(model.parameters(), lr=lr)
             elif optimizer_type == 'sgd':
+                print("Optimizer:", optimizer_type)
                 optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, nesterov=True)
+            print()
 
             print("Learning Rate:", lr)
             trained_model, losses, scores = utils.train(model, epochs, batch, criterion, optimizer)
