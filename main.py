@@ -70,21 +70,21 @@ def main():
         batch_size = [16, 32]
 
     for batch in batch_size:
-        for lr in learning_rates:
-            if model_type == 'simple':
-                print("Model:", model_type)
-                model = SimpleConvNet()
-            elif model_type == 'resnet':
-                print("Model:", model_type)
-                resnet = models.resnet18(pretrained=True)
-                resnet.fc = torch.nn.Linear(in_features=51200, out_features=1)
-                model = resnet
-            elif model_type == 'improved':
-                learning_rates = [0.1, 0.01, 0.001]
-                batch = 5
-                print("Model:", model_type)
-                model = ImprovedConvNet()
+        if model_type == 'simple':
+            print("Model:", model_type)
+            model = SimpleConvNet()
+        elif model_type == 'resnet':
+            print("Model:", model_type)
+            resnet = models.resnet18(pretrained=True)
+            resnet.fc = torch.nn.Linear(in_features=51200, out_features=1)
+            model = resnet
+        elif model_type == 'improved':
+            learning_rates = [0.1, 0.01, 0.001]
+            batch = 5
+            print("Model:", model_type)
+            model = ImprovedConvNet()
 
+        for lr in learning_rates:
             if optimizer_type == 'adam':
                 print("Optimizer:", optimizer_type)
                 optimizer = torch.optim.Adam(model.parameters(), lr=lr)
