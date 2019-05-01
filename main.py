@@ -80,7 +80,7 @@ def main():
             model = resnet
         elif model_type == 'improved':
             learning_rates = [0.1, 0.01, 0.001]
-            batch = 5
+            epochs = 5
             print("Model:", model_type)
             model = ImprovedConvNet()
 
