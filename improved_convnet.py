@@ -41,26 +41,17 @@ class ImprovedConvNet(torch.nn.Module):
         x = self.maxpooling_layer(x)
         x = self.block_1_3(x)
 
-        x = self.relu(x)
-        x = self.maxpooling_layer(x)
-
         x = self.block_2_1(x)
         x = self.block_2_2(x)
         x = self.relu(x)
         x = self.maxpooling_layer(x)
         x = self.block_2_3(x)
 
-        x = self.relu(x)
-        x = self.maxpooling_layer(x)
-
         x = self.block_3_1(x)
         x = self.block_3_2(x)
         x = self.relu(x)
         x = self.maxpooling_layer(x)
         x = self.block_3_3(x)
-
-        x = self.relu(x)
-        x = self.maxpooling_layer(x)
 
         x = self.block_4_1(x)
         x = self.block_4_2(x)
