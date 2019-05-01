@@ -18,9 +18,7 @@ class ImprovedConvNet(torch.nn.Module):
         self.block_4_1 = torch.nn.Conv2d(in_channels=128, out_channels=64, kernel_size=3)
         self.block_4_2 = torch.nn.Conv2d(in_channels=64, out_channels=32, kernel_size=3)
 
-        self.fc_1 = torch.nn.Linear(in_features=4608, out_features=4608)
-        self.fc_2 = torch.nn.Linear(in_features=4608, out_features=4608)
-        self.fc_3 = torch.nn.Linear(in_features=4608, out_features=1)
+        self.fc_1 = torch.nn.Linear(in_features=4608, out_features=1)
 
         self.relu = torch.nn.ReLU()
         self.maxpooling_layer = torch.nn.MaxPool2d(kernel_size=2)
@@ -54,7 +52,5 @@ class ImprovedConvNet(torch.nn.Module):
         # flattening the tensor so that it can serve as input to a linear layer
         x = x.view(x.size(0), -1)
         x = self.fc_1(x)
-        x = self.fc_2(x)
-        x = self.fc_3(x)
 
         return x
