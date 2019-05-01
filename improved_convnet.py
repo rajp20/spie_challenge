@@ -26,9 +26,9 @@ class ImprovedConvNet(torch.nn.Module):
         self.block_5_2 = torch.nn.Conv2d(in_channels=32, out_channels=16, kernel_size=3)
         self.block_5_3 = torch.nn.Conv2d(in_channels=16, out_channels=8, kernel_size=3)
 
-        self.fc_1 = torch.nn.Linear(in_features=2304, out_features=2048)
-        self.fc_2 = torch.nn.Linear(in_features=2048, out_features=2048)
-        self.fc_3 = torch.nn.Linear(in_features=2048, out_features=1)
+        self.fc_1 = torch.nn.Linear(in_features=1152, out_features=512)
+        self.fc_2 = torch.nn.Linear(in_features=512, out_features=256)
+        self.fc_3 = torch.nn.Linear(in_features=256, out_features=1)
 
         self.relu = torch.nn.ReLU()
         self.maxpooling_layer = torch.nn.MaxPool2d(kernel_size=2)
