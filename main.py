@@ -105,7 +105,7 @@ def main():
     losses_figure_ax.set_xlabel("Epochs")
     losses_figure_ax.set_ylabel("Losses")
     losses_figure_ax.legend()
-    losses_figure.savefig(model_type + "_" + optimizer_type + "_Losses_" + str(epochs) + "e.png")
+    losses_figure.savefig("./graphs/" + model_type + "_" + optimizer_type + "_Losses_" + str(epochs) + "e.png")
 
     scores_figure_ax.set_title("Scores vs. Epochs")
     scores_figure_ax.set_xlabel("Epochs")
