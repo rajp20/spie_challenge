@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.24)  1 MAY 2019 21:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.24)  1 MAY 2019 21:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -20,7 +20,7 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 \@IEEEnormalsizefontbaselineskip=\skip41
 
--- This is an 11 point document.
+-- This is a 12 point document.
 \normalsizebaselineskip=\skip42
 \normaljot=\skip43
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
@@ -43,24 +43,24 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
 
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <11> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
-
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
 
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <17> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <14> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <22> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1111.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <22> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1111.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24> not available
@@ -853,12 +853,12 @@ LaTeX Font Info:    ... okay on input line 35.
 * \topmargin=-30.06749pt
 * \headheight=12.0pt
 * \headsep=18.06749pt
-* \topskip=13.3846pt
+* \topskip=13.92pt
 * \footskip=28.90755pt
 * \marginparwidth=20.0pt
 * \marginparsep=10.0pt
 * \columnsep=14.45377pt
-* \skip\footins=12.04605pt plus 5.35374pt minus 2.67686pt
+* \skip\footins=12.52791pt plus 5.5679pt minus 2.78395pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -936,21 +936,22 @@ LaTeX Info: Redefining \nameref on input line 35.
 \openout3 = `Report.out'.
 
 \c__siunitx_mathsf_int=\count311
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 35.
 \c__siunitx_mathtt_int=\count312
  [0
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 4048) in paragraph at lines 59--61
+Underfull \hbox (badness 3407) in paragraph at lines 59--61
 []\OT1/ptm/b/it/10 Index Terms\OT1/ptm/b/n/10 ---Convolutional Neu-ral Net-work
 
  []
 
-(./Report.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 85.
- [1
+(./Report.bbl [1
 
+
+])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 85.
+ [2
 
 ]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 85.
@@ -962,22 +963,22 @@ Package rerunfilecheck Info: File `Report.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 85.
  ) 
 Here is how much of TeX's memory you used:
- 19975 strings out of 492982
- 380180 string characters out of 6134896
- 461977 words of memory out of 5000000
- 23351 multiletter control sequences out of 15000+600000
- 571259 words of font info for 102 fonts, out of 8000000 for 9000
+ 19960 strings out of 492982
+ 379871 string characters out of 6134896
+ 461961 words of memory out of 5000000
+ 23332 multiletter control sequences out of 15000+600000
+ 570521 words of font info for 100 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,8n,38p,10375b,812s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,8n,38p,10375b,875s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/
 times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.p
 fb>
-Output written on Report.pdf (2 pages, 62489 bytes).
+Output written on Report.pdf (3 pages, 62786 bytes).
 PDF statistics:
- 87 PDF objects out of 1000 (max. 8388607)
- 78 compressed objects within 1 object stream
- 25 named destinations out of 1000 (max. 500000)
+ 91 PDF objects out of 1000 (max. 8388607)
+ 81 compressed objects within 1 object stream
+ 26 named destinations out of 1000 (max. 500000)
  49 words of extra memory for PDF output out of 10000 (max. 10000000)
 
