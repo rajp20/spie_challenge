@@ -67,7 +67,7 @@ def main():
 
     batch_size = [8, 16]
     if model_type == 'resnet':
-        batch_size = [16, 32]
+        batch_size = [12, 24]
     if model_type == 'improved':
         epochs = 20
 
