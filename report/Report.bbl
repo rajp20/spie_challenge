@@ -21,11 +21,17 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{mgerla}
-M.~Gerla, E.-K. Lee, G.~Pau, and U.~Lee, ``Internet of {V}ehicles: From
-  {I}ntelligent {G}rid to {A}utonomous {C}ars and {V}ehicular {C}louds,'' in
-  \emph{Internet of Things (WF-IoT), 2014 IEEE World Forum on}, Seoul, South
-  Korea, 2014, pp. 241--246.
+\bibitem{web1}
+\BIBentryALTinterwordspacing
+U.{S}. {B}reast {C}ancer {S}tatistics. [Online]. Available:
+  \url{https://www.breastcancer.org/symptoms/understand_bc/statistics}
+\BIBentrySTDinterwordspacing
+
+\bibitem{web2}
+\BIBentryALTinterwordspacing
+Diagnosing breast cancer. [Online]. Available:
+  \url{https://www.breastcancer.org/symptoms/understand_bc/statistics}
+\BIBentrySTDinterwordspacing
 
 \bibitem{wuhe}
 W.~He, G.~Yan, and L.~D. Xu, ``Developing {V}ehicular {D}ata {C}loud {S}ervices

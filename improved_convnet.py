@@ -6,17 +6,17 @@ class ImprovedConvNet(torch.nn.Module):
         super(ImprovedConvNet, self).__init__()
         self.input = torch.nn.Conv2d(in_channels=3, out_channels=32, kernel_size=3)
 
-        self.block_1_1 = torch.nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3)
-        self.block_1_2 = torch.nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3)
+        self.block_1_1 = torch.nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3)
+        self.block_1_2 = torch.nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3)
 
-        self.block_2_1 = torch.nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3)
-        self.block_2_2 = torch.nn.Conv2d(in_channels=256, out_channels=512, kernel_size=3)
+        self.block_2_1 = torch.nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3)
+        self.block_2_2 = torch.nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3)
 
-        self.block_3_1 = torch.nn.Conv2d(in_channels=512, out_channels=256, kernel_size=3)
-        self.block_3_2 = torch.nn.Conv2d(in_channels=256, out_channels=128, kernel_size=3)
+        self.block_3_1 = torch.nn.Conv2d(in_channels=128, out_channels=128, kernel_size=3)
+        self.block_3_2 = torch.nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3)
 
-        self.block_4_1 = torch.nn.Conv2d(in_channels=128, out_channels=64, kernel_size=3)
-        self.block_4_2 = torch.nn.Conv2d(in_channels=64, out_channels=32, kernel_size=3)
+        self.block_4_1 = torch.nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3)
+        self.block_4_2 = torch.nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3)
 
         self.fc_1 = torch.nn.Linear(in_features=4608, out_features=1)
 
