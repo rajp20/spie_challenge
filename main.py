@@ -69,8 +69,8 @@ def main():
     if model_type == 'resnet':
         batch_size = [16, 32]
     if model_type == 'improved':
-        learning_rates = [0.1, 0.01, 0.001]
-        epochs = 5
+        learning_rates = [0.01, 0.001]
+        epochs = 20
 
     for batch in batch_size:
         for lr in learning_rates:
