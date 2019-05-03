@@ -61,8 +61,8 @@ def main():
     epochs = 20
     learning_rates = [random.uniform(0.01, 0.0001), random.uniform(0, 0.0001), random.uniform(0, 0.0001)]
 
-    # criterion = torch.nn.BCEWithLogitsLoss()
-    criterion = torch.nn.MSELoss()
+    criterion = torch.nn.BCEWithLogitsLoss()
+    # criterion = torch.nn.MSELoss()
     utils = Utils(train_data, val_data, test_data)
 
     batch_size = [8, 16]
@@ -99,6 +99,9 @@ def main():
             label = "LR: " + lr_string + ", Batch: " + str(batch)
             losses_figure_ax.plot(range(0, len(losses)), losses, label=label)
             scores_figure_ax.plot(range(0, len(scores)), scores, label=label)
+
+            test_score = utils.evaluate(train_data)
+            print("Test Score:", test_score)
 
     losses_figure_ax.set_title("Losses vs. Epochs (" + model_type + "+" + optimizer_type + ")")
     losses_figure_ax.set_xlabel("Epochs")

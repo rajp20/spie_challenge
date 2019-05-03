@@ -202,6 +202,25 @@ class Utils:
 
         return p_k
 
-    def evaluate(self):
+    def evaluate(self, model, debug=True):
         test_loader = torch.utils.data.DataLoader(self.test_data, shuffle=True, batch_size=1, num_workers=4)
-        return
+        # toggle model to eval mode
+        model.eval()
+
+        # turn off gradients since they will not be used here
+        # this is to make the inference faster
+        with torch.no_grad():
+            logits_predicted = []
+            labels = []
+
+            # run through several batches, does inference for each and store inference results
+            # and store both target labels and inferenced scores
+            for image, label in test_loader:
+                image = image.cuda()
+                out = model(image)
+                out = torch.sigmoid(out)
+                logits_predicted.append(out.cpu().detach().numpy())
+                labels.append(label.cpu().detach().numpy())
+
+                # returns a list of scores, one for each of the labels
+        return self.predict_prob(labels, logits_predicted, initial_lexsort=True)
