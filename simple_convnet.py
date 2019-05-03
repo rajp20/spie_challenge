@@ -10,7 +10,7 @@ class SimpleConvNet(torch.nn.Module):
         self.convolution_layer_2 = torch.nn.Conv2d(in_channels=16, out_channels=32, kernel_size=4)
         self.convolution_layer_3 = torch.nn.Conv2d(in_channels=32, out_channels=64, kernel_size=4)
         self.convolution_layer_4 = torch.nn.Conv2d(in_channels=64, out_channels=32, kernel_size=4)
-        self.convolution_layer_5 = torch.nn.Conv2d(in_channels=32, out_channels=1, kernel_size=4)
+        self.convolution_layer_5 = torch.nn.Conv2d(in_channels=32, out_channels=16, kernel_size=4)
         self.fully_connected_layer = torch.nn.Linear(in_features=2704, out_features=1)
 
     def forward(self, x):
