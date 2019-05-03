@@ -27,6 +27,10 @@ U.{S}. {B}reast {C}ancer {S}tatistics. [Online]. Available:
   \url{https://www.breastcancer.org/symptoms/understand_bc/statistics}
 \BIBentrySTDinterwordspacing
 
+\bibitem{carol}
+C.~DeSantis, J.~Ma, L.~Bryan, and A.~Jemal, ``Breast cancer statistics,''
+  \emph{Breast Cancer Statistics}, pp. 52--62, 2013.
+
 \bibitem{web2}
 \BIBentryALTinterwordspacing
 Diagnosing breast cancer. [Online]. Available:
@@ -61,9 +65,5 @@ H.~Aboulkheyr, M.~Jannesari, M.~Habibzadeh, P.~Khosravi, O.~Elemento,
   I.~Hajirasouliha, and M.~Totonchi, ``Breast cancer histopathological image
   classification: A deep learning approach,'' \emph{IEEE International
   Conference on Bioinformatics and Biomedical (BIBM)}, pp. 2405--2412, 2018.
-
-\bibitem{carol}
-C.~DeSantis, J.~Ma, L.~Bryan, and A.~Jemal, ``Breast cancer statistics,''
-  \emph{Breast Cancer Statistics}, pp. 52--62, 2013.
 
 \end{thebibliography}
