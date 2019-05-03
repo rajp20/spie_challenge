@@ -31,7 +31,7 @@ class SimpleConvNet(torch.nn.Module):
         x = self.maxpooling_layer(x)
 
         # flattening the tensor so that it can serve as input to a linear layer
-        # x = x.view(x.size(0), -1)
-        # x = self.fully_connected_layer(x)
+        x = x.view(x.size(0), -1)
+        x = self.fully_connected_layer(x)
 
         return x
